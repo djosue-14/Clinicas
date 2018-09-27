@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+    
+    <div id="pacientesAll">
+        @Html.Partial("_All")
+    </div>
+    <div id="create">
+      @Html.Partial("_Create")
+    </div>
+    <div id="edit">
+        @Html.Partial("_Edit")
+    </div>
+    <div id="pacienteOne">
+        @Html.Partial("_One")
+    </div>
+    <div id="modalCreateConsulta">
+        @Html.Partial("_CreateConsulta")
+    </div>
+
+
+@section scripts {
+    <script>
+        let pacienteIndex = new PacienteIndex();
+        let pacienteCreate = new PacienteCreate();
+        let pacienteEdit = new PacienteEdit();
+        let pacienteShow = new PacienteShow();
+        let consultaCreate = new ConsultaCreate();
+    </script>
+}

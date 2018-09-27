@@ -1,0 +1,553 @@
+﻿<div id="consultasAll">
+    @Html.Partial("_All")
+</div>
+<div id="consultasEdit">
+    @Html.Partial("_Edit")
+</div>
+<div id="consultaShow">
+    @Html.Partial("_Show")
+</div>
+
+<div id="graficas">
+    @Html.Partial("_CreateGrafica")
+</div>
+
+@section Scripts{
+  <script>
+      let consultaIndex = new ConsultaIndex();
+      let consultaEdit = new ConsultaEdit();
+      let consultaShow = new ConsultaShow();
+      let graficaCreate = new GraficasCreate();
+  </script>
+
+    <script>
+
+        //VERIFICACION DE EDAD
+        $(document).ready(function (e) {
+            $("#FechaVisita").on({
+                change: function () {
+                    var fecha = document.getElementById("FechaNacimiento").value;
+                    // Si la fecha es correcta, calculamos la edad
+
+                    var dia = 0;
+                    var mes = 0;
+                    var ano = 0;
+                    var ahora_ano = 0;
+                    var ahora_mes = 0;
+                    var ahora_dia = 0;
+                    var meses = 0;
+                    var totalm = 0;
+                    var values = fecha.split("-");
+                    dia = values[2];
+                    mes = values[1];
+                    ano = values[0];
+
+                    // cogemos los valores actuales
+                    var fecha_hoy = document.getElementById("FechaVisita").value;
+                    var values2 = fecha_hoy.split("-");
+                    ahora_ano = values2[0];
+                    ahora_mes = values2[1];
+                    ahora_dia = values2[2];
+
+                    // realizamos el calculo
+                    var edad = (ahora_ano - ano);
+                    if (edad > 0) { totalm = edad * 12; }
+
+                    if (ahora_mes < mes) {
+                        edad--;
+                        totalm = totalm - 12;
+
+                    }
+                    if ((mes == ahora_mes) && (ahora_dia < dia)) {
+                        edad--;
+
+
+                    }
+
+
+                    // calculamos los meses
+
+                    if (ahora_mes > mes)
+                        meses = ahora_mes - mes;
+                    if (ahora_mes < mes)
+                        meses = 12 - (mes - ahora_mes);
+                    if (ahora_mes == mes && dia > ahora_dia)
+                        meses = 11;
+
+                    // calculamos los dias
+                    var dias = 0;
+
+                    //suma de meses:
+
+                    if (ahora_dia > dia)
+                        dias = ahora_dia - dia;
+                    if (ahora_dia < dia) {
+                        ultimoDiaMes = new Date(ahora_ano, ahora_mes, 0);
+                        dias = ultimoDiaMes.getDate() - (dia - ahora_dia);
+                    }
+
+                    totalm = meses + totalm;
+                    if (meses > 0 && edad > 0 || meses > 0 && edad == 0 || edad > 0 && meses == 0) {
+                        $("#EdadActual").val(totalm + " Meses (" + edad + "a," + meses + "m)");
+                    } else if (dias > 0 && meses == 0 && edad == 0) {
+                        $("#EdadActual").val("1 mes aprox.");
+                        totalm = 1;
+                    }
+                    else {
+                        $("#EdadActual").val("");
+                        swal({
+                            type: 'error',
+                            title: 'Fecha de Visita Incorrecta',
+                            text: 'La fecha de visita debe ser superior a la de nacimiento'
+                        });
+
+                    }
+
+                }
+
+            });
+        });
+
+        //VERIFICACION PESO
+        $(document).ready(function () {
+
+            //IMC PARA KILO
+            $("#Kilo").click(function () {
+                if ($("#Kilo").is(':checked')) {
+
+                    var pesokilo = document.getElementById("Peso").value;
+                    var talla = document.getElementById("Talla").value;
+                    var talladecimal = 0;
+                    var imc = 0;
+                    var nimc = 0;
+                    if (pesokilo > 0 && talla > 10) {
+                        talladecimal = talla / 100;
+                        imc = pesokilo / (talladecimal * talladecimal);
+                        nimc = imc.toFixed(1);
+                        $("#IMC").val(nimc);
+                    }
+                    //SI NO SE HA INGRESADO PESO
+                    else {
+                        $("#Kilo").prop('checked', false);
+                        $("#IMC").val("");
+                        swal({
+                            type: 'error',
+                            title: 'Ingrese el peso del paciente',
+                            text: 'debe ingresar antes, el peso y la estatura respectiva del paciente'
+                        });
+
+
+                    }
+
+
+                }
+
+            });
+            //IMC PARA LIBRA
+            $("#Libra").click(function () {
+                if ($("#Libra").is(':checked')) {
+
+                    var pesokilo = document.getElementById("Peso").value;
+                    var talla = document.getElementById("Talla").value;
+                    var talladecimal = 0;
+                    var imc = 0;
+                    var nimc = 0;
+                    if (pesokilo > 0 && talla > 10) {
+                        //CONVERSION DE LIBRA A KG
+                        var conversion = 0;
+                        var tasa = 0.453592;
+                        conversion = pesokilo * tasa;
+                        var nconversion = conversion.toFixed(2);
+
+                        talladecimal = talla / 100;
+                        imc = nconversion / (talladecimal * talladecimal);
+                        nimc = imc.toFixed(1);
+                        $("#IMC").val(nimc);
+
+                    }
+                    //SI NO SE HA INGRESADO PESO
+                    else {
+                        $("#IMC").val("");
+                        $("#Libra").prop('checked', false);
+                        swal({
+                            type: 'error',
+                            title: 'Ingrese el peso del paciente',
+                            text: 'debe ingresar antes, el peso y la estarura respectiva del paciente'
+                        });
+
+
+                    }
+                }
+
+            });
+
+        }); //FIN VERIFICACION PESO
+
+        //EJECUTA LAS GRAFICAS
+        function mostrar() {
+
+            var pimc = 0;
+            var pactual = 0;
+            pimc = document.getElementById("IMC").value;
+            pactual = document.getElementById("EdadActual").value;
+            var mesesconvertido = pactual.split("M");
+            var meses_vacio = $.trim(mesesconvertido[0]);
+
+            function grfninio() {
+                //new niños de 0 a 5 imc
+                var imcninios = document.getElementById("imcninios");
+                Chart.defaults.global.defaultFontFamily = "Arial";
+                Chart.defaults.global.defaultFontSize = 10;
+
+                //datos primera linea
+                var dataFirst = {
+                    label: "3",
+                    data: [{ x: "0", y: 11 }, { x: "1", y: 12.8 }, { x: "2", y: 13.9 }, { x: "4", y: 14.7 }, { x: "6", y: 14.9 }
+                        , { x: "8", y: 14.8 }, { x: "10", y: 14.7 }, { x: "12", y: 14.5 }, { x: "24", y: 13.7 }, { x: "24", y: 13.9 }, { x: "60", y: 13 }],
+                    lineTension: 0.4,
+                    borderWidth: 2,
+                    fill: false,
+                    borderColor: 'red',
+                    backgroundColor: 'red',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+                };
+
+                // datos segunda linea
+                var dataSecond = {
+                    label: "15",
+                    data: [{ x: "0", y: 12 }, { x: "1", y: 13.6 }, { x: "2", y: 14.9 }, { x: "4", y: 15.7 }, { x: "6", y: 15.9 }, { x: "8", y: 15.85 }
+                        , { x: "24", y: 14.6 }, { x: "24", y: 14.8 }, { x: "60", y: 13.9 }
+                    ],
+                    lineTension: 0.4,
+                    borderWidth: 2,
+                    fill: false,
+                    borderColor: 'orange',
+                    backgroundColor: 'orange',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+                };
+
+                // datos tercer linea
+                var dataThird = {
+                    label: "50",
+                    data: [{ x: "0", y: 13.4 }, { x: "1", y: 15 }, { x: "2", y: 16.3 }, { x: "4", y: 17.2 }, { x: "6", y: 17.3 }, { x: "8", y: 17.25 }, { x: "10", y: 17.05 }
+                        , { x: "12", y: 16.8 }, { x: "24", y: 15.75 }, { x: "24", y: 16 }, { x: "60", y: 15.2 }
+                    ],
+                    borderWidth: 2,
+                    lineTension: 0.4,
+                    fill: false,
+                    borderColor: 'green',
+                    backgroundColor: 'green',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+                };
+
+                // datos cuarta linea
+                var dataFour = {
+                    label: "85",
+                    data: [{ x: "0", y: 14.7 }, { x: "1", y: 16.4 }, { x: "2", y: 17.8 }, { x: "4", y: 18.7 }, { x: "6", y: 18.9 }, { x: "8", y: 18.8 }, { x: "10", y: 18.6 },
+                    { x: "12", y: 18.25 }, { x: "24", y: 17.1 }, { x: "24", y: 17.4 }, { x: "60", y: 16.7 }
+                    ],
+                    lineTension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: 'orange',
+                    backgroundColor: 'orange',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+                };
+
+                // datos quinta linea
+                var dataFive = {
+                    label: "97",
+
+                    data: [{ x: "0", y: 15.9 }, { x: "1", y: 17.6 }, { x: "2", y: 19.2 }, { x: "4", y: 20.1 }, { x: "6", y: 20.3 }, { x: "8", y: 20.2 }, { x: "10", y: 19.9 }
+                        , { x: "12", y: 19.6 }, { x: "24", y: 18.4 }, { x: "24", y: 18.7 }, { x: "36", y: 18.2 }, { x: "48", y: 18 }, { x: "60", y: 18.1 }
+                    ],
+                    borderWidth: 2,
+                    lineTension: 0.4,
+                    fill: false,
+                    borderColor: 'red',
+                    backgroundColor: 'red',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+
+                };
+
+                //datos paciente
+                var dataPaciente = {
+
+                    label: 'Paciente',
+                    data: [
+                        { x: "" + meses_vacio + "", y: pimc }
+                    ],
+
+                    //colores,
+                    borderWidth: 2,
+                    fill: false,
+                    borderColor: 'black',
+                    backgroundColor: 'black',
+                    pointRadius: 5,
+                    pointHoverRadius: 10,
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2, borderDash: [5, 5],
+                    pointBorderColor: 'black',
+                    pointBackgroundColor: 'black'
+                    // configuracion linea
+                };
+
+
+                //valores label inferior
+                var datosninio = {
+                    labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
+                        , "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40"
+                        , "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"],
+                    datasets: [dataFive, dataFour, dataThird, dataSecond, dataFirst, dataPaciente]
+                };
+
+                var chartOptions = {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            boxWidth: 15,
+                            fontColor: 'black',
+                        },
+                    }
+                };
+
+                var lineChart = new Chart(imcninios, {
+                    type: 'line',
+                    data: datosninio,
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            enabled: true,
+                            mode: 'single',
+                            callbacks: {
+                                title: function (tooltipItem, data) { return "Paciente"; },
+                                label: function (tooltipItems, data) { return "IMC: " + tooltipItems.yLabel; },
+                            }
+                        },
+                        legend: { display: true, position: 'right' },
+                        plugins: { datalabels: { display: false } },
+                        title: { display: true, position: 'left', text: 'IMC (Kg/cm2)' },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMin: 10,
+                                    suggestedMax: 21
+                                }
+                            }]
+                        }
+                    }
+                });
+
+
+            }
+
+            function grfninia() {
+                //new niños de 0 a 5 imc
+                var imcninias = document.getElementById("imcninias");
+                Chart.defaults.global.defaultFontFamily = "Arial";
+                Chart.defaults.global.defaultFontSize = 10;
+
+                //datos primera linea
+                var dataFirst = {
+                    label: "3",
+                    data: [{ x: "0", y: 10.8 }, { x: "1", y: 12 }, { x: "2", y: 13.2 }, { x: "4", y: 14 }, { x: "6", y: 14.3 }
+                        , { x: "8", y: 14.3 }, { x: "10", y: 14.15 }, { x: "12", y: 13.9 }, { x: "24", y: 13.2 }, { x: "24", y: 13.5 }, { x: "60", y: 12.8 }],
+                    lineTension: 0.4,
+                    borderWidth: 2,
+                    fill: false,
+                    borderColor: 'red',
+                    backgroundColor: 'red',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+                };
+
+                // datos segunda linea
+                var dataSecond = {
+                    label: "15",
+                    data: [{ x: "0", y: 11.8 }, { x: "1", y: 13 }, { x: "2", y: 14.2 }, { x: "4", y: 15.2 }, { x: "6", y: 15.5 }, { x: "8", y: 15.4 }, { x: "10", y: 15.2 }
+                        , { x: "12", y: 15 }, { x: "24", y: 14.15 }, { x: "24", y: 14.3 }, { x: "60", y: 13.8 }
+                    ],
+                    lineTension: 0.4,
+                    borderWidth: 2,
+                    fill: false,
+                    borderColor: 'orange',
+                    backgroundColor: 'orange',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+                };
+
+                // datos tercer linea
+                var dataThird = {
+                    label: "50",
+                    data: [{ x: "0", y: 13.2 }, { x: "1", y: 14.4 }, { x: "2", y: 15.8 }, { x: "4", y: 16.6 }, { x: "6", y: 16.9 }, { x: "8", y: 16.8 }, { x: "10", y: 16.6 }
+                        , { x: "12", y: 16.4 }, { x: "24", y: 15.4 }, { x: "24", y: 15.7 }, { x: "60", y: 15.25 }
+                    ],
+                    borderWidth: 2,
+                    lineTension: 0.4,
+                    fill: false,
+                    borderColor: 'green',
+                    backgroundColor: 'green',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+                };
+
+                // datos cuarta linea
+                var dataFour = {
+                    label: "85",
+                    data: [{ x: "0", y: 14.6 }, { x: "1", y: 16 }, { x: "2", y: 17.4 }, { x: "4", y: 18.3 }, { x: "6", y: 18.6 }, { x: "8", y: 18.45 }, { x: "10", y: 18.2 },
+                    { x: "12", y: 17.9 }, { x: "24", y: 16.9 }, { x: "24", y: 17.2 }, { x: "36", y: 16.85 }, { x: "48", y: 16.80 }, { x: "60", y: 17 }
+                    ],
+                    lineTension: 0.4,
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: 'orange',
+                    backgroundColor: 'orange',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+                };
+
+                // datos quinta linea
+                var dataFive = {
+                    label: "97",
+
+                    data: [{ x: "0", y: 15.8 }, { x: "1", y: 17.4 }, { x: "2", y: 18.8 }, { x: "4", y: 19.8 }, { x: "6", y: 20.1 }, { x: "8", y: 20 }, { x: "10", y: 19.7 }
+                        , { x: "12", y: 19.4 }, { x: "24", y: 18.2 }, { x: "24", y: 18.5 }, { x: "36", y: 18.2 }, { x: "48", y: 18.3 }, { x: "60", y: 18.6 }
+                    ],
+                    borderWidth: 2,
+                    lineTension: 0.4,
+                    fill: false,
+                    borderColor: 'red',
+                    backgroundColor: 'red',
+                    pointBorderColor: 'transparent',
+                    pointBackgroundColor: 'transparent'
+
+                };
+
+                //datos paciente
+                var dataPaciente = {
+
+                    label: 'Paciente',
+                    data: [
+                        { x: "" + meses_vacio + "", y: pimc }
+                    ],
+
+                    //colores,
+                    borderWidth: 2,
+                    fill: false,
+                    borderColor: 'black',
+                    backgroundColor: 'black',
+                    pointRadius: 5,
+                    pointHoverRadius: 10,
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2, borderDash: [5, 5],
+                    pointBorderColor: 'black',
+                    pointBackgroundColor: 'black'
+                    // configuracion linea
+                };
+
+
+                //valores label inferior
+                var datosninia = {
+                    labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
+                        , "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40"
+                        , "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"],
+                    datasets: [dataFive, dataFour, dataThird, dataSecond, dataFirst, dataPaciente]
+                };
+
+                var chartOptions = {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            boxWidth: 15,
+                            fontColor: 'black',
+                        },
+                    }
+                };
+
+                var lineChart = new Chart(imcninias, {
+                    type: 'line',
+                    data: datosninia,
+                    options: {
+                        responsive: true,
+                        tooltips: {
+                            enabled: true,
+                            mode: 'single',
+                            callbacks: {
+                                title: function (tooltipItem, data) { return "Paciente"; },
+                                label: function (tooltipItems, data) { return "IMC: " + tooltipItems.yLabel; },
+                            }
+                        },
+                        legend: { display: true, position: 'right' },
+                        plugins: { datalabels: { display: false } },
+                        title: { display: true, position: 'left', text: 'IMC (Kg/cm2)' },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    suggestedMin: 10,
+                                    suggestedMax: 21
+                                }
+                            }]
+                        }
+                    }
+                });
+
+
+            }
+
+            //verificar si estan todos los campos
+            var dato1 = document.getElementById("EdadActual").value;
+            var dato2 = document.getElementById("IMC").value;
+
+            if ($("#Kilo").is(':checked') || $("#Libra").is(':checked') && $("#Masculino").is(':checked') || $("#Femenino").is(':checked')
+                && dato2 > 0 && dato1 != "") {
+                //si todo esta bien
+                $(document).ready(function () {
+                    if (meses_vacio < 61) {
+                        //SELECCIONA GENERO MASCULINO
+                        if ($("#Masculino").is(':checked')) {
+                            document.getElementById('ocultoFemenino').style.display = 'none';
+                            document.getElementById('ocultoMasculino').style.display = 'block';
+                            $('#imcninios').remove();
+                            $('#ocultoMasculino').append("<canvas id='imcninios'></canvas>");
+                            grfninio();
+                        }
+
+
+                        //SELECCIONA GENERO FEMENINO
+                        if ($("#Femenino").is(':checked')) {
+                            document.getElementById('ocultoMasculino').style.display = 'none';
+                            document.getElementById('ocultoFemenino').style.display = 'block';
+                            $('#imcninias').remove();
+                            $('#ocultoFemenino').append("<canvas id='imcninias'></canvas>");
+                            grfninia();
+                        }
+
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'No se pudo generar la grafica',
+                            text: 'Error en la creacion de la grafica debido a que la edad del paciente es mayor a 60 meses(5a)'
+                        });
+                    }
+                });
+
+            } else {
+                swal({
+                    type: 'error',
+                    title: 'Faltan datos importantes',
+                    text: 'por favor, rellene toda su información'
+                });
+            }
+
+        }
+        //FIN GRAFICAS
+
+    </script>
+}

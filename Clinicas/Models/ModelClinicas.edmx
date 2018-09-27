@@ -1,0 +1,1592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ClinicasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CIE10">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clinica">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nit" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodigoPostal" Type="int" />
+          <Property Name="Referencia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefono" Type="int" Nullable="false" />
+          <Property Name="Logo" Type="varchar" MaxLength="50" />
+          <Property Name="CuentaId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Consulta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PacienteId" Type="int" />
+          <Property Name="EstadoConsultaId" Type="int" />
+          <Property Name="UsuarioAsignadoId" Type="int" />
+          <Property Name="Titulo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Inicio" Type="datetime" Nullable="false" />
+          <Property Name="Fin" Type="datetime" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="30" />
+          <Property Name="UsuarioCreaId" Type="int" />
+        </EntityType>
+        <EntityType Name="ConsultaEstado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CrecimientoPaciente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsultaId" Type="int" Nullable="false" />
+          <Property Name="Peso" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Talla" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="EdadActual" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cuenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalUsuarios" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DiagnosticoCIE10">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsultaId" Type="int" Nullable="false" />
+          <Property Name="TipoDiagnosticoId" Type="int" Nullable="false" />
+          <Property Name="CIE10Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Especialidades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoEspecialidad" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EstadoConsulta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExamenLaboratorio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoExamen" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Medicamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoMedicamentoId" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ccmposicion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Uso" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrdenImagen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsultaId" Type="int" />
+          <Property Name="Url" Type="varchar" MaxLength="75" />
+        </EntityType>
+        <EntityType Name="OrdenLaboratorio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsultaId" Type="int" Nullable="false" />
+          <Property Name="ExamenId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoSangreId" Type="int" Nullable="false" />
+          <Property Name="SexoId" Type="int" Nullable="false" />
+          <Property Name="PrimerNombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SegundoNombre" Type="varchar" MaxLength="20" />
+          <Property Name="PrimerApellido" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SegundoApellido" Type="varchar" MaxLength="20" />
+          <Property Name="Telefono" Type="int" />
+          <Property Name="CodigoPaciente" Type="varchar" MaxLength="30" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="Ocupacion" Type="varchar" MaxLength="30" />
+          <Property Name="Direccion" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="PagoConsulta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoPagoId" Type="int" Nullable="false" />
+          <Property Name="ConsultaId" Type="int" Nullable="false" />
+          <Property Name="Monto" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PagoCuenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CuentaId" Type="int" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFin" Type="datetime" Nullable="false" />
+          <Property Name="Monto" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsultaId" Type="int" Nullable="false" />
+          <Property Name="MedicamentoId" Type="int" Nullable="false" />
+          <Property Name="Indicaciones" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReferenciaPaciente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PacienteId" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Parentesco" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sexo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="TipoDiagnostico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TipoMedicamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoPagoConsulta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoSangre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoUsuarioId" Type="int" Nullable="false" />
+          <Property Name="EspecialidadId" Type="int" Nullable="false" />
+          <Property Name="CuentaId" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Telefono" Type="int" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Clinica_REFERENCE_Cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Clinica" Type="Self.Clinica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clinica">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_REFERENCE_ESTADOCO">
+          <End Role="EstadoConsulta" Type="Self.EstadoConsulta" Multiplicity="0..1" />
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoConsulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="EstadoConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_REFERENCE_Paciente">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1" />
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_REFERENCE_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="UsuarioAsignadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRECIMIE_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="CrecimientoPaciente" Type="Self.CrecimientoPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CrecimientoPaciente">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIAGNOST_REFERENCE_CIE10">
+          <End Role="CIE10" Type="Self.CIE10" Multiplicity="1" />
+          <End Role="DiagnosticoCIE10" Type="Self.DiagnosticoCIE10" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CIE10">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiagnosticoCIE10">
+              <PropertyRef Name="CIE10Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIAGNOST_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="DiagnosticoCIE10" Type="Self.DiagnosticoCIE10" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiagnosticoCIE10">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIAGNOST_REFERENCE_TIPODIAG">
+          <End Role="TipoDiagnostico" Type="Self.TipoDiagnostico" Multiplicity="1" />
+          <End Role="DiagnosticoCIE10" Type="Self.DiagnosticoCIE10" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDiagnostico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiagnosticoCIE10">
+              <PropertyRef Name="TipoDiagnosticoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDICAME_REFERENCE_TIPOMEDI">
+          <End Role="TipoMedicamento" Type="Self.TipoMedicamento" Multiplicity="1" />
+          <End Role="Medicamento" Type="Self.Medicamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoMedicamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medicamento">
+              <PropertyRef Name="TipoMedicamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDENIMA_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="0..1" />
+          <End Role="OrdenImagen" Type="Self.OrdenImagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrdenImagen">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDENLAB_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="OrdenLaboratorio" Type="Self.OrdenLaboratorio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrdenLaboratorio">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDENLAB_REFERENCE_EXAMENLA">
+          <End Role="ExamenLaboratorio" Type="Self.ExamenLaboratorio" Multiplicity="1" />
+          <End Role="OrdenLaboratorio" Type="Self.OrdenLaboratorio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamenLaboratorio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrdenLaboratorio">
+              <PropertyRef Name="ExamenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Paciente_REFERENCE_Sexo">
+          <End Role="Sexo" Type="Self.Sexo" Multiplicity="1" />
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sexo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paciente">
+              <PropertyRef Name="SexoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Paciente_REFERENCE_TIPOSANG">
+          <End Role="TipoSangre" Type="Self.TipoSangre" Multiplicity="1" />
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoSangre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paciente">
+              <PropertyRef Name="TipoSangreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAGOCONS_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="PagoConsulta" Type="Self.PagoConsulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PagoConsulta">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAGOCONS_REFERENCE_TIPOPAGO">
+          <End Role="TipoPagoConsulta" Type="Self.TipoPagoConsulta" Multiplicity="1" />
+          <End Role="PagoConsulta" Type="Self.PagoConsulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPagoConsulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PagoConsulta">
+              <PropertyRef Name="TipoPagoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAGOCUEN_REFERENCE_Cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="PagoCuenta" Type="Self.PagoCuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PagoCuenta">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receta_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receta_REFERENCE_MEDICAME">
+          <End Role="Medicamento" Type="Self.Medicamento" Multiplicity="1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="MedicamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REFERENC_REFERENCE_Paciente">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="1" />
+          <End Role="ReferenciaPaciente" Type="Self.ReferenciaPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReferenciaPaciente">
+              <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_REFERENCE_Cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_REFERENCE_ESPECIAL">
+          <End Role="Especialidades" Type="Self.Especialidades" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="EspecialidadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_REFERENCE_TIPOUSUA">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="TipoUsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="uspReportePacientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ClinicasModelStoreContainer">
+          <EntitySet Name="CIE10" EntityType="Self.CIE10" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clinica" EntityType="Self.Clinica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Consulta" EntityType="Self.Consulta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsultaEstado" EntityType="Self.ConsultaEstado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CrecimientoPaciente" EntityType="Self.CrecimientoPaciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cuenta" EntityType="Self.Cuenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiagnosticoCIE10" EntityType="Self.DiagnosticoCIE10" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Especialidades" EntityType="Self.Especialidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoConsulta" EntityType="Self.EstadoConsulta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamenLaboratorio" EntityType="Self.ExamenLaboratorio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medicamento" EntityType="Self.Medicamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenImagen" EntityType="Self.OrdenImagen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenLaboratorio" EntityType="Self.OrdenLaboratorio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paciente" EntityType="Self.Paciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PagoConsulta" EntityType="Self.PagoConsulta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PagoCuenta" EntityType="Self.PagoCuenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReferenciaPaciente" EntityType="Self.ReferenciaPaciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sexo" EntityType="Self.Sexo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDiagnostico" EntityType="Self.TipoDiagnostico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoMedicamento" EntityType="Self.TipoMedicamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoPagoConsulta" EntityType="Self.TipoPagoConsulta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoSangre" EntityType="Self.TipoSangre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Clinica_REFERENCE_Cuenta" Association="Self.FK_Clinica_REFERENCE_Cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Clinica" EntitySet="Clinica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_REFERENCE_ESTADOCO" Association="Self.FK_Consulta_REFERENCE_ESTADOCO">
+            <End Role="EstadoConsulta" EntitySet="EstadoConsulta" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_REFERENCE_Paciente" Association="Self.FK_Consulta_REFERENCE_Paciente">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_REFERENCE_Usuario" Association="Self.FK_Consulta_REFERENCE_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRECIMIE_REFERENCE_CONSULTA" Association="Self.FK_CRECIMIE_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="CrecimientoPaciente" EntitySet="CrecimientoPaciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIAGNOST_REFERENCE_CIE10" Association="Self.FK_DIAGNOST_REFERENCE_CIE10">
+            <End Role="CIE10" EntitySet="CIE10" />
+            <End Role="DiagnosticoCIE10" EntitySet="DiagnosticoCIE10" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIAGNOST_REFERENCE_CONSULTA" Association="Self.FK_DIAGNOST_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="DiagnosticoCIE10" EntitySet="DiagnosticoCIE10" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIAGNOST_REFERENCE_TIPODIAG" Association="Self.FK_DIAGNOST_REFERENCE_TIPODIAG">
+            <End Role="TipoDiagnostico" EntitySet="TipoDiagnostico" />
+            <End Role="DiagnosticoCIE10" EntitySet="DiagnosticoCIE10" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDICAME_REFERENCE_TIPOMEDI" Association="Self.FK_MEDICAME_REFERENCE_TIPOMEDI">
+            <End Role="TipoMedicamento" EntitySet="TipoMedicamento" />
+            <End Role="Medicamento" EntitySet="Medicamento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDENIMA_REFERENCE_CONSULTA" Association="Self.FK_ORDENIMA_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="OrdenImagen" EntitySet="OrdenImagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDENLAB_REFERENCE_CONSULTA" Association="Self.FK_ORDENLAB_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="OrdenLaboratorio" EntitySet="OrdenLaboratorio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDENLAB_REFERENCE_EXAMENLA" Association="Self.FK_ORDENLAB_REFERENCE_EXAMENLA">
+            <End Role="ExamenLaboratorio" EntitySet="ExamenLaboratorio" />
+            <End Role="OrdenLaboratorio" EntitySet="OrdenLaboratorio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Paciente_REFERENCE_Sexo" Association="Self.FK_Paciente_REFERENCE_Sexo">
+            <End Role="Sexo" EntitySet="Sexo" />
+            <End Role="Paciente" EntitySet="Paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Paciente_REFERENCE_TIPOSANG" Association="Self.FK_Paciente_REFERENCE_TIPOSANG">
+            <End Role="TipoSangre" EntitySet="TipoSangre" />
+            <End Role="Paciente" EntitySet="Paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAGOCONS_REFERENCE_CONSULTA" Association="Self.FK_PAGOCONS_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="PagoConsulta" EntitySet="PagoConsulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAGOCONS_REFERENCE_TIPOPAGO" Association="Self.FK_PAGOCONS_REFERENCE_TIPOPAGO">
+            <End Role="TipoPagoConsulta" EntitySet="TipoPagoConsulta" />
+            <End Role="PagoConsulta" EntitySet="PagoConsulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAGOCUEN_REFERENCE_Cuenta" Association="Self.FK_PAGOCUEN_REFERENCE_Cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="PagoCuenta" EntitySet="PagoCuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receta_REFERENCE_CONSULTA" Association="Self.FK_Receta_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receta_REFERENCE_MEDICAME" Association="Self.FK_Receta_REFERENCE_MEDICAME">
+            <End Role="Medicamento" EntitySet="Medicamento" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REFERENC_REFERENCE_Paciente" Association="Self.FK_REFERENC_REFERENCE_Paciente">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="ReferenciaPaciente" EntitySet="ReferenciaPaciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_REFERENCE_Cuenta" Association="Self.FK_Usuario_REFERENCE_Cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_REFERENCE_ESPECIAL" Association="Self.FK_Usuario_REFERENCE_ESPECIAL">
+            <End Role="Especialidades" EntitySet="Especialidades" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_REFERENCE_TIPOUSUA" Association="Self.FK_Usuario_REFERENCE_TIPOUSUA">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClinicasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CIE10">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DiagnosticoCIE10" Relationship="Self.FK_DIAGNOST_REFERENCE_CIE10" FromRole="CIE10" ToRole="DiagnosticoCIE10" />
+        </EntityType>
+        <EntityType Name="Clinica">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nit" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodigoPostal" Type="Int32" />
+          <Property Name="Referencia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="Int32" Nullable="false" />
+          <Property Name="Logo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CuentaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cuenta" Relationship="Self.FK_Clinica_REFERENCE_Cuenta" FromRole="Clinica" ToRole="Cuenta" />
+        </EntityType>
+        <EntityType Name="Consulta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PacienteId" Type="Int32" />
+          <Property Name="EstadoConsultaId" Type="Int32" />
+          <Property Name="UsuarioAsignadoId" Type="Int32" />
+          <Property Name="Titulo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Inicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="UsuarioCreaId" Type="Int32" />
+          <NavigationProperty Name="EstadoConsulta" Relationship="Self.FK_Consulta_REFERENCE_ESTADOCO" FromRole="Consulta" ToRole="EstadoConsulta" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK_Consulta_REFERENCE_Paciente" FromRole="Consulta" ToRole="Paciente" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Consulta_REFERENCE_Usuario" FromRole="Consulta" ToRole="Usuario" />
+          <NavigationProperty Name="CrecimientoPaciente" Relationship="Self.FK_CRECIMIE_REFERENCE_CONSULTA" FromRole="Consulta" ToRole="CrecimientoPaciente" />
+          <NavigationProperty Name="DiagnosticoCIE10" Relationship="Self.FK_DIAGNOST_REFERENCE_CONSULTA" FromRole="Consulta" ToRole="DiagnosticoCIE10" />
+          <NavigationProperty Name="OrdenImagen" Relationship="Self.FK_ORDENIMA_REFERENCE_CONSULTA" FromRole="Consulta" ToRole="OrdenImagen" />
+          <NavigationProperty Name="OrdenLaboratorio" Relationship="Self.FK_ORDENLAB_REFERENCE_CONSULTA" FromRole="Consulta" ToRole="OrdenLaboratorio" />
+          <NavigationProperty Name="PagoConsulta" Relationship="Self.FK_PAGOCONS_REFERENCE_CONSULTA" FromRole="Consulta" ToRole="PagoConsulta" />
+          <NavigationProperty Name="Receta" Relationship="Self.FK_Receta_REFERENCE_CONSULTA" FromRole="Consulta" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="ConsultaEstado">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="CrecimientoPaciente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsultaId" Type="Int32" Nullable="false" />
+          <Property Name="Peso" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Talla" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="EdadActual" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_CRECIMIE_REFERENCE_CONSULTA" FromRole="CrecimientoPaciente" ToRole="Consulta" />
+        </EntityType>
+        <EntityType Name="Cuenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TotalUsuarios" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clinica" Relationship="Self.FK_Clinica_REFERENCE_Cuenta" FromRole="Cuenta" ToRole="Clinica" />
+          <NavigationProperty Name="PagoCuenta" Relationship="Self.FK_PAGOCUEN_REFERENCE_Cuenta" FromRole="Cuenta" ToRole="PagoCuenta" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_REFERENCE_Cuenta" FromRole="Cuenta" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="DiagnosticoCIE10">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsultaId" Type="Int32" Nullable="false" />
+          <Property Name="TipoDiagnosticoId" Type="Int32" Nullable="false" />
+          <Property Name="CIE10Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CIE10" Relationship="Self.FK_DIAGNOST_REFERENCE_CIE10" FromRole="DiagnosticoCIE10" ToRole="CIE10" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_DIAGNOST_REFERENCE_CONSULTA" FromRole="DiagnosticoCIE10" ToRole="Consulta" />
+          <NavigationProperty Name="TipoDiagnostico" Relationship="Self.FK_DIAGNOST_REFERENCE_TIPODIAG" FromRole="DiagnosticoCIE10" ToRole="TipoDiagnostico" />
+        </EntityType>
+        <EntityType Name="Especialidades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoEspecialidad" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_REFERENCE_ESPECIAL" FromRole="Especialidades" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="EstadoConsulta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_Consulta_REFERENCE_ESTADOCO" FromRole="EstadoConsulta" ToRole="Consulta" />
+        </EntityType>
+        <EntityType Name="ExamenLaboratorio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoExamen" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="OrdenLaboratorio" Relationship="Self.FK_ORDENLAB_REFERENCE_EXAMENLA" FromRole="ExamenLaboratorio" ToRole="OrdenLaboratorio" />
+        </EntityType>
+        <EntityType Name="Medicamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoMedicamentoId" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ccmposicion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Uso" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TipoMedicamento" Relationship="Self.FK_MEDICAME_REFERENCE_TIPOMEDI" FromRole="Medicamento" ToRole="TipoMedicamento" />
+          <NavigationProperty Name="Receta" Relationship="Self.FK_Receta_REFERENCE_MEDICAME" FromRole="Medicamento" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="OrdenImagen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsultaId" Type="Int32" />
+          <Property Name="Url" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_ORDENIMA_REFERENCE_CONSULTA" FromRole="OrdenImagen" ToRole="Consulta" />
+        </EntityType>
+        <EntityType Name="OrdenLaboratorio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsultaId" Type="Int32" Nullable="false" />
+          <Property Name="ExamenId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_ORDENLAB_REFERENCE_CONSULTA" FromRole="OrdenLaboratorio" ToRole="Consulta" />
+          <NavigationProperty Name="ExamenLaboratorio" Relationship="Self.FK_ORDENLAB_REFERENCE_EXAMENLA" FromRole="OrdenLaboratorio" ToRole="ExamenLaboratorio" />
+        </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoSangreId" Type="Int32" Nullable="false" />
+          <Property Name="SexoId" Type="Int32" Nullable="false" />
+          <Property Name="PrimerNombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SegundoNombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PrimerApellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SegundoApellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="Int32" />
+          <Property Name="CodigoPaciente" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Ocupacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_Consulta_REFERENCE_Paciente" FromRole="Paciente" ToRole="Consulta" />
+          <NavigationProperty Name="Sexo" Relationship="Self.FK_Paciente_REFERENCE_Sexo" FromRole="Paciente" ToRole="Sexo" />
+          <NavigationProperty Name="TipoSangre" Relationship="Self.FK_Paciente_REFERENCE_TIPOSANG" FromRole="Paciente" ToRole="TipoSangre" />
+          <NavigationProperty Name="ReferenciaPaciente" Relationship="Self.FK_REFERENC_REFERENCE_Paciente" FromRole="Paciente" ToRole="ReferenciaPaciente" />
+        </EntityType>
+        <EntityType Name="PagoConsulta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoPagoId" Type="Int32" Nullable="false" />
+          <Property Name="ConsultaId" Type="Int32" Nullable="false" />
+          <Property Name="Monto" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_PAGOCONS_REFERENCE_CONSULTA" FromRole="PagoConsulta" ToRole="Consulta" />
+          <NavigationProperty Name="TipoPagoConsulta" Relationship="Self.FK_PAGOCONS_REFERENCE_TIPOPAGO" FromRole="PagoConsulta" ToRole="TipoPagoConsulta" />
+        </EntityType>
+        <EntityType Name="PagoCuenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CuentaId" Type="Int32" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Monto" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Cuenta" Relationship="Self.FK_PAGOCUEN_REFERENCE_Cuenta" FromRole="PagoCuenta" ToRole="Cuenta" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsultaId" Type="Int32" Nullable="false" />
+          <Property Name="MedicamentoId" Type="Int32" Nullable="false" />
+          <Property Name="Indicaciones" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_Receta_REFERENCE_CONSULTA" FromRole="Receta" ToRole="Consulta" />
+          <NavigationProperty Name="Medicamento" Relationship="Self.FK_Receta_REFERENCE_MEDICAME" FromRole="Receta" ToRole="Medicamento" />
+        </EntityType>
+        <EntityType Name="ReferenciaPaciente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PacienteId" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Parentesco" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK_REFERENC_REFERENCE_Paciente" FromRole="ReferenciaPaciente" ToRole="Paciente" />
+        </EntityType>
+        <EntityType Name="Sexo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK_Paciente_REFERENCE_Sexo" FromRole="Sexo" ToRole="Paciente" />
+        </EntityType>
+        <EntityType Name="TipoDiagnostico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DiagnosticoCIE10" Relationship="Self.FK_DIAGNOST_REFERENCE_TIPODIAG" FromRole="TipoDiagnostico" ToRole="DiagnosticoCIE10" />
+        </EntityType>
+        <EntityType Name="TipoMedicamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Medicamento" Relationship="Self.FK_MEDICAME_REFERENCE_TIPOMEDI" FromRole="TipoMedicamento" ToRole="Medicamento" />
+        </EntityType>
+        <EntityType Name="TipoPagoConsulta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PagoConsulta" Relationship="Self.FK_PAGOCONS_REFERENCE_TIPOPAGO" FromRole="TipoPagoConsulta" ToRole="PagoConsulta" />
+        </EntityType>
+        <EntityType Name="TipoSangre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK_Paciente_REFERENCE_TIPOSANG" FromRole="TipoSangre" ToRole="Paciente" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_REFERENCE_TIPOUSUA" FromRole="TipoUsuario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoUsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="EspecialidadId" Type="Int32" Nullable="false" />
+          <Property Name="CuentaId" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="Int32" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consulta" Relationship="Self.FK_Consulta_REFERENCE_Usuario" FromRole="Usuario" ToRole="Consulta" />
+          <NavigationProperty Name="Cuenta" Relationship="Self.FK_Usuario_REFERENCE_Cuenta" FromRole="Usuario" ToRole="Cuenta" />
+          <NavigationProperty Name="Especialidades" Relationship="Self.FK_Usuario_REFERENCE_ESPECIAL" FromRole="Usuario" ToRole="Especialidades" />
+          <NavigationProperty Name="TipoUsuario" Relationship="Self.FK_Usuario_REFERENCE_TIPOUSUA" FromRole="Usuario" ToRole="TipoUsuario" />
+        </EntityType>
+        <Association Name="FK_DIAGNOST_REFERENCE_CIE10">
+          <End Role="CIE10" Type="Self.CIE10" Multiplicity="1" />
+          <End Role="DiagnosticoCIE10" Type="Self.DiagnosticoCIE10" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CIE10">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiagnosticoCIE10">
+              <PropertyRef Name="CIE10Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clinica_REFERENCE_Cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Clinica" Type="Self.Clinica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clinica">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_REFERENCE_ESTADOCO">
+          <End Role="EstadoConsulta" Type="Self.EstadoConsulta" Multiplicity="0..1" />
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoConsulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="EstadoConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_REFERENCE_Paciente">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1" />
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consulta_REFERENCE_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consulta">
+              <PropertyRef Name="UsuarioAsignadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRECIMIE_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="CrecimientoPaciente" Type="Self.CrecimientoPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CrecimientoPaciente">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIAGNOST_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="DiagnosticoCIE10" Type="Self.DiagnosticoCIE10" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiagnosticoCIE10">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDENIMA_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="0..1" />
+          <End Role="OrdenImagen" Type="Self.OrdenImagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrdenImagen">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDENLAB_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="OrdenLaboratorio" Type="Self.OrdenLaboratorio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrdenLaboratorio">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAGOCONS_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="PagoConsulta" Type="Self.PagoConsulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PagoConsulta">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receta_REFERENCE_CONSULTA">
+          <End Role="Consulta" Type="Self.Consulta" Multiplicity="1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="ConsultaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAGOCUEN_REFERENCE_Cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="PagoCuenta" Type="Self.PagoCuenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PagoCuenta">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_REFERENCE_Cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="CuentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIAGNOST_REFERENCE_TIPODIAG">
+          <End Role="TipoDiagnostico" Type="Self.TipoDiagnostico" Multiplicity="1" />
+          <End Role="DiagnosticoCIE10" Type="Self.DiagnosticoCIE10" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDiagnostico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiagnosticoCIE10">
+              <PropertyRef Name="TipoDiagnosticoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_REFERENCE_ESPECIAL">
+          <End Role="Especialidades" Type="Self.Especialidades" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="EspecialidadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDENLAB_REFERENCE_EXAMENLA">
+          <End Role="ExamenLaboratorio" Type="Self.ExamenLaboratorio" Multiplicity="1" />
+          <End Role="OrdenLaboratorio" Type="Self.OrdenLaboratorio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExamenLaboratorio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrdenLaboratorio">
+              <PropertyRef Name="ExamenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDICAME_REFERENCE_TIPOMEDI">
+          <End Role="TipoMedicamento" Type="Self.TipoMedicamento" Multiplicity="1" />
+          <End Role="Medicamento" Type="Self.Medicamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoMedicamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medicamento">
+              <PropertyRef Name="TipoMedicamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receta_REFERENCE_MEDICAME">
+          <End Role="Medicamento" Type="Self.Medicamento" Multiplicity="1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="MedicamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Paciente_REFERENCE_Sexo">
+          <End Role="Sexo" Type="Self.Sexo" Multiplicity="1" />
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sexo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paciente">
+              <PropertyRef Name="SexoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Paciente_REFERENCE_TIPOSANG">
+          <End Role="TipoSangre" Type="Self.TipoSangre" Multiplicity="1" />
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoSangre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paciente">
+              <PropertyRef Name="TipoSangreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REFERENC_REFERENCE_Paciente">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="1" />
+          <End Role="ReferenciaPaciente" Type="Self.ReferenciaPaciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReferenciaPaciente">
+              <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PAGOCONS_REFERENCE_TIPOPAGO">
+          <End Role="TipoPagoConsulta" Type="Self.TipoPagoConsulta" Multiplicity="1" />
+          <End Role="PagoConsulta" Type="Self.PagoConsulta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPagoConsulta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PagoConsulta">
+              <PropertyRef Name="TipoPagoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_REFERENCE_TIPOUSUA">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="TipoUsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClinicasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CIE10" EntityType="Self.CIE10" />
+          <EntitySet Name="Clinica" EntityType="Self.Clinica" />
+          <EntitySet Name="Consulta" EntityType="Self.Consulta" />
+          <EntitySet Name="ConsultaEstado" EntityType="Self.ConsultaEstado" />
+          <EntitySet Name="CrecimientoPaciente" EntityType="Self.CrecimientoPaciente" />
+          <EntitySet Name="Cuenta" EntityType="Self.Cuenta" />
+          <EntitySet Name="DiagnosticoCIE10" EntityType="Self.DiagnosticoCIE10" />
+          <EntitySet Name="Especialidades" EntityType="Self.Especialidades" />
+          <EntitySet Name="EstadoConsulta" EntityType="Self.EstadoConsulta" />
+          <EntitySet Name="ExamenLaboratorio" EntityType="Self.ExamenLaboratorio" />
+          <EntitySet Name="Medicamento" EntityType="Self.Medicamento" />
+          <EntitySet Name="OrdenImagen" EntityType="Self.OrdenImagen" />
+          <EntitySet Name="OrdenLaboratorio" EntityType="Self.OrdenLaboratorio" />
+          <EntitySet Name="Paciente" EntityType="Self.Paciente" />
+          <EntitySet Name="PagoConsulta" EntityType="Self.PagoConsulta" />
+          <EntitySet Name="PagoCuenta" EntityType="Self.PagoCuenta" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" />
+          <EntitySet Name="ReferenciaPaciente" EntityType="Self.ReferenciaPaciente" />
+          <EntitySet Name="Sexo" EntityType="Self.Sexo" />
+          <EntitySet Name="TipoDiagnostico" EntityType="Self.TipoDiagnostico" />
+          <EntitySet Name="TipoMedicamento" EntityType="Self.TipoMedicamento" />
+          <EntitySet Name="TipoPagoConsulta" EntityType="Self.TipoPagoConsulta" />
+          <EntitySet Name="TipoSangre" EntityType="Self.TipoSangre" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_DIAGNOST_REFERENCE_CIE10" Association="Self.FK_DIAGNOST_REFERENCE_CIE10">
+            <End Role="CIE10" EntitySet="CIE10" />
+            <End Role="DiagnosticoCIE10" EntitySet="DiagnosticoCIE10" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clinica_REFERENCE_Cuenta" Association="Self.FK_Clinica_REFERENCE_Cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Clinica" EntitySet="Clinica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_REFERENCE_ESTADOCO" Association="Self.FK_Consulta_REFERENCE_ESTADOCO">
+            <End Role="EstadoConsulta" EntitySet="EstadoConsulta" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_REFERENCE_Paciente" Association="Self.FK_Consulta_REFERENCE_Paciente">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consulta_REFERENCE_Usuario" Association="Self.FK_Consulta_REFERENCE_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Consulta" EntitySet="Consulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRECIMIE_REFERENCE_CONSULTA" Association="Self.FK_CRECIMIE_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="CrecimientoPaciente" EntitySet="CrecimientoPaciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIAGNOST_REFERENCE_CONSULTA" Association="Self.FK_DIAGNOST_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="DiagnosticoCIE10" EntitySet="DiagnosticoCIE10" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDENIMA_REFERENCE_CONSULTA" Association="Self.FK_ORDENIMA_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="OrdenImagen" EntitySet="OrdenImagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDENLAB_REFERENCE_CONSULTA" Association="Self.FK_ORDENLAB_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="OrdenLaboratorio" EntitySet="OrdenLaboratorio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAGOCONS_REFERENCE_CONSULTA" Association="Self.FK_PAGOCONS_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="PagoConsulta" EntitySet="PagoConsulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receta_REFERENCE_CONSULTA" Association="Self.FK_Receta_REFERENCE_CONSULTA">
+            <End Role="Consulta" EntitySet="Consulta" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAGOCUEN_REFERENCE_Cuenta" Association="Self.FK_PAGOCUEN_REFERENCE_Cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="PagoCuenta" EntitySet="PagoCuenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_REFERENCE_Cuenta" Association="Self.FK_Usuario_REFERENCE_Cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIAGNOST_REFERENCE_TIPODIAG" Association="Self.FK_DIAGNOST_REFERENCE_TIPODIAG">
+            <End Role="TipoDiagnostico" EntitySet="TipoDiagnostico" />
+            <End Role="DiagnosticoCIE10" EntitySet="DiagnosticoCIE10" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_REFERENCE_ESPECIAL" Association="Self.FK_Usuario_REFERENCE_ESPECIAL">
+            <End Role="Especialidades" EntitySet="Especialidades" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDENLAB_REFERENCE_EXAMENLA" Association="Self.FK_ORDENLAB_REFERENCE_EXAMENLA">
+            <End Role="ExamenLaboratorio" EntitySet="ExamenLaboratorio" />
+            <End Role="OrdenLaboratorio" EntitySet="OrdenLaboratorio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDICAME_REFERENCE_TIPOMEDI" Association="Self.FK_MEDICAME_REFERENCE_TIPOMEDI">
+            <End Role="TipoMedicamento" EntitySet="TipoMedicamento" />
+            <End Role="Medicamento" EntitySet="Medicamento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receta_REFERENCE_MEDICAME" Association="Self.FK_Receta_REFERENCE_MEDICAME">
+            <End Role="Medicamento" EntitySet="Medicamento" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Paciente_REFERENCE_Sexo" Association="Self.FK_Paciente_REFERENCE_Sexo">
+            <End Role="Sexo" EntitySet="Sexo" />
+            <End Role="Paciente" EntitySet="Paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Paciente_REFERENCE_TIPOSANG" Association="Self.FK_Paciente_REFERENCE_TIPOSANG">
+            <End Role="TipoSangre" EntitySet="TipoSangre" />
+            <End Role="Paciente" EntitySet="Paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REFERENC_REFERENCE_Paciente" Association="Self.FK_REFERENC_REFERENCE_Paciente">
+            <End Role="Paciente" EntitySet="Paciente" />
+            <End Role="ReferenciaPaciente" EntitySet="ReferenciaPaciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PAGOCONS_REFERENCE_TIPOPAGO" Association="Self.FK_PAGOCONS_REFERENCE_TIPOPAGO">
+            <End Role="TipoPagoConsulta" EntitySet="TipoPagoConsulta" />
+            <End Role="PagoConsulta" EntitySet="PagoConsulta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_REFERENCE_TIPOUSUA" Association="Self.FK_Usuario_REFERENCE_TIPOUSUA">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <FunctionImport Name="uspReportePacientes" ReturnType="Collection(ClinicasModel.uspReportePacientes_Result)" />
+        </EntityContainer>
+        <ComplexType Name="uspReportePacientes_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" />
+          <Property Type="String" Name="Sangre" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Genero" Nullable="true" MaxLength="15" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClinicasModelStoreContainer" CdmEntityContainer="ClinicasEntities">
+          <EntitySetMapping Name="CIE10">
+            <EntityTypeMapping TypeName="ClinicasModel.CIE10">
+              <MappingFragment StoreEntitySet="CIE10">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clinica">
+            <EntityTypeMapping TypeName="ClinicasModel.Clinica">
+              <MappingFragment StoreEntitySet="Clinica">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nit" ColumnName="Nit" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="CuentaId" ColumnName="CuentaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consulta">
+            <EntityTypeMapping TypeName="ClinicasModel.Consulta">
+              <MappingFragment StoreEntitySet="Consulta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+                <ScalarProperty Name="EstadoConsultaId" ColumnName="EstadoConsultaId" />
+                <ScalarProperty Name="UsuarioAsignadoId" ColumnName="UsuarioAsignadoId" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="Fin" ColumnName="Fin" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="UsuarioCreaId" ColumnName="UsuarioCreaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConsultaEstado">
+            <EntityTypeMapping TypeName="ClinicasModel.ConsultaEstado">
+              <MappingFragment StoreEntitySet="ConsultaEstado">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CrecimientoPaciente">
+            <EntityTypeMapping TypeName="ClinicasModel.CrecimientoPaciente">
+              <MappingFragment StoreEntitySet="CrecimientoPaciente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
+                <ScalarProperty Name="Peso" ColumnName="Peso" />
+                <ScalarProperty Name="Talla" ColumnName="Talla" />
+                <ScalarProperty Name="EdadActual" ColumnName="EdadActual" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cuenta">
+            <EntityTypeMapping TypeName="ClinicasModel.Cuenta">
+              <MappingFragment StoreEntitySet="Cuenta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="TotalUsuarios" ColumnName="TotalUsuarios" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiagnosticoCIE10">
+            <EntityTypeMapping TypeName="ClinicasModel.DiagnosticoCIE10">
+              <MappingFragment StoreEntitySet="DiagnosticoCIE10">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
+                <ScalarProperty Name="TipoDiagnosticoId" ColumnName="TipoDiagnosticoId" />
+                <ScalarProperty Name="CIE10Id" ColumnName="CIE10Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Especialidades">
+            <EntityTypeMapping TypeName="ClinicasModel.Especialidades">
+              <MappingFragment StoreEntitySet="Especialidades">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoEspecialidad" ColumnName="TipoEspecialidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoConsulta">
+            <EntityTypeMapping TypeName="ClinicasModel.EstadoConsulta">
+              <MappingFragment StoreEntitySet="EstadoConsulta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamenLaboratorio">
+            <EntityTypeMapping TypeName="ClinicasModel.ExamenLaboratorio">
+              <MappingFragment StoreEntitySet="ExamenLaboratorio">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoExamen" ColumnName="TipoExamen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medicamento">
+            <EntityTypeMapping TypeName="ClinicasModel.Medicamento">
+              <MappingFragment StoreEntitySet="Medicamento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoMedicamentoId" ColumnName="TipoMedicamentoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Ccmposicion" ColumnName="Ccmposicion" />
+                <ScalarProperty Name="Uso" ColumnName="Uso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenImagen">
+            <EntityTypeMapping TypeName="ClinicasModel.OrdenImagen">
+              <MappingFragment StoreEntitySet="OrdenImagen">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenLaboratorio">
+            <EntityTypeMapping TypeName="ClinicasModel.OrdenLaboratorio">
+              <MappingFragment StoreEntitySet="OrdenLaboratorio">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
+                <ScalarProperty Name="ExamenId" ColumnName="ExamenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paciente">
+            <EntityTypeMapping TypeName="ClinicasModel.Paciente">
+              <MappingFragment StoreEntitySet="Paciente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoSangreId" ColumnName="TipoSangreId" />
+                <ScalarProperty Name="SexoId" ColumnName="SexoId" />
+                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="CodigoPaciente" ColumnName="CodigoPaciente" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Ocupacion" ColumnName="Ocupacion" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PagoConsulta">
+            <EntityTypeMapping TypeName="ClinicasModel.PagoConsulta">
+              <MappingFragment StoreEntitySet="PagoConsulta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoPagoId" ColumnName="TipoPagoId" />
+                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PagoCuenta">
+            <EntityTypeMapping TypeName="ClinicasModel.PagoCuenta">
+              <MappingFragment StoreEntitySet="PagoCuenta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CuentaId" ColumnName="CuentaId" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receta">
+            <EntityTypeMapping TypeName="ClinicasModel.Receta">
+              <MappingFragment StoreEntitySet="Receta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
+                <ScalarProperty Name="MedicamentoId" ColumnName="MedicamentoId" />
+                <ScalarProperty Name="Indicaciones" ColumnName="Indicaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReferenciaPaciente">
+            <EntityTypeMapping TypeName="ClinicasModel.ReferenciaPaciente">
+              <MappingFragment StoreEntitySet="ReferenciaPaciente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Parentesco" ColumnName="Parentesco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sexo">
+            <EntityTypeMapping TypeName="ClinicasModel.Sexo">
+              <MappingFragment StoreEntitySet="Sexo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDiagnostico">
+            <EntityTypeMapping TypeName="ClinicasModel.TipoDiagnostico">
+              <MappingFragment StoreEntitySet="TipoDiagnostico">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoMedicamento">
+            <EntityTypeMapping TypeName="ClinicasModel.TipoMedicamento">
+              <MappingFragment StoreEntitySet="TipoMedicamento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoPagoConsulta">
+            <EntityTypeMapping TypeName="ClinicasModel.TipoPagoConsulta">
+              <MappingFragment StoreEntitySet="TipoPagoConsulta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoSangre">
+            <EntityTypeMapping TypeName="ClinicasModel.TipoSangre">
+              <MappingFragment StoreEntitySet="TipoSangre">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoUsuario">
+            <EntityTypeMapping TypeName="ClinicasModel.TipoUsuario">
+              <MappingFragment StoreEntitySet="TipoUsuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ClinicasModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoUsuarioId" ColumnName="TipoUsuarioId" />
+                <ScalarProperty Name="EspecialidadId" ColumnName="EspecialidadId" />
+                <ScalarProperty Name="CuentaId" ColumnName="CuentaId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspReportePacientes" FunctionName="ClinicasModel.Store.uspReportePacientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClinicasModel.uspReportePacientes_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Sangre" ColumnName="Sangre" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

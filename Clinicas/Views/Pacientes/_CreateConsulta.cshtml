@@ -1,0 +1,40 @@
+<div class="modal fade bd-example-modal-lg" id="modalAddConsulta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear Consulta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form id="formCreateConsulta">
+            <!--Campos ocultos-->
+            <input type="hidden" value="" name="PacienteId" id="PacienteId">
+            <input type="hidden" value="" name="Inicio" id="Inicio" />
+            <input type="hidden" value="" name="Fin" id="Fin"/>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="Titulo">Titulo: </label>
+                        <input type="text" name="Titulo" id="Titulo" class="form-control">
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label for="Fecha">Fecha: </label>
+                        <input type="text" name="Fecha" id="Fecha" class="form-control">
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label for="Descripcion">Descripcion: </label>
+                        <input type="text" name="Descripcion" id="Descripcion" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>

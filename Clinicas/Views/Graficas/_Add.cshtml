@@ -1,0 +1,103 @@
+﻿<div class="card">
+    <div class="card-header bg-teal text-white text-center">
+        <h3 class="h3">Crecimiento del Paciente</h3>
+    </div>
+    <div class="card-body">
+        
+        @* FORMULARIO DATOS DEL PACIENTE *@
+        <form autocomplete="off">
+            <div class="panel-body col-lg-12">
+                   <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label style="color:blue;">Datos Paciente</label>
+                    </div>
+                    </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="date" class="form-control" id="FechaNacimiento" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Fecha Visita</label>
+                        <input type="date" class="form-control" id="FechaVisita" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Edad Actual</label>
+                        <input type="Text" class="form-control" readonly id="EdadActual">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Seleccione Genero:</label>
+                        <br />
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Genero" id="Masculino" value="1" required>
+                            <label class="form-check-label" for="GeneroM">Masculino</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Genero" id="Femenino" value="2">
+                            <label class="form-check-label" for="GeneroF">Femenino</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label>Longitud/Talla (Cm)</label>
+                        <input type="number" step="0.01" min="50" max="150" class="form-control" id="Talla" required>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Peso</label>
+                        <input type="number" step="0.01" min="2" class="form-control" id="Peso" required>
+
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Seleccione Tipo:</label>
+                        <br />
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Peso" id="Kilo" value="3" required>
+                            <label class="form-check-label" for="Kilo">Kilos</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Peso" id="Libra" value="4">
+                            <label class="form-check-label" for="Libra">Libras</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Indice de Masa Corporal</label>
+                        <input type="Text" class="form-control" readonly id="IMC">
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+        <div class="row col-md-8">
+            <div class="col-md-4 text-left">
+                <button type="submit" id="removeData" class="btn btn-primary fa fa-bullseye" onclick="mostrar()"> Verificar Graficas</button>
+                <br /><br />
+            </div>
+            <div class="col-md-4 text-right">
+                <button type="submit" id="generaPDF" class="btn btn-danger fa fa-save" onclick="guardar()"> Descargar </button>
+                <br /><br />
+
+            </div>
+        </div>
+
+        @* DIV DE GRAFICA IMC *@
+        <div class="col-md-12" id='ocultoMasculino' style='display:none; background-color: aliceblue;'>
+            <canvas id="imcninios"></canvas>
+        </div>
+        <div class="col-md-12" id='ocultoFemenino' style='display:none; background-color: lightpink;'>
+            <canvas id="imcninias"></canvas>
+        </div>
+        @* FIN FORMULARIO *@
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
